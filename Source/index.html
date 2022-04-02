@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+  <link rel="shortcut icon" href="#" />
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <style>
+    @media screen and (max-width: 992px) {
+      .navitem {
+        width: 80px;
+        height: 40px;
+      }
+    }
+
+
+    .storyContent {
+      width: 800px;
+      height: 400px;
+      background-color: #f2f2f8;
+      display: none;
+    }
+
+
+    .wordMain {
+      width: 100%;
+      height: 100%;
+
+    }
+
+    .center {
+      text-align: center;
+      justify-content: center;
+      display: grid;
+
+    }
+
+    .centerText {
+
+      text-align: center;
+      justify-content: center;
+      display: flex;
+
+    }
+
+    .wordContent {
+      min-height: 200px;
+      font-size: 96px;
+      background-color: #f1eecb;
+      overflow: auto;
+    }
+
+    .kDHpBI {
+      display: relative;
+      outline: none;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 14px 24px;
+      border: none;
+      transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
+      /* background: linear-gradient(to right, rgb(230, 30, 77) 0%, rgb(227, 28, 95) 50%, rgb(215, 4, 102) 100%); */
+      background:linear-gradient(to right, rgb(140, 30, 77) 13%, rgb(173, 28, 95) 37%, rgb(141, 4, 110) 100%);
+      color: rgb(255, 255, 255);
+    }
+
+    .btnIcon {
+      width: fit-content;
+      height: 50px;
+    }
+
+    .storyArea {
+      width: 100%;
+      height: 100%;
+    }
+
+    .showHide {
+      background: linear-gradient(to right, rgb(180, 180, 180) 0%, rgb(150, 150, 150) 50%, rgb(100, 100, 100) 100%);
+    }
+
+    .nextword {
+      background: linear-gradient(to right, rgb(139, 48, 25) 0%, rgb(150, 0, 150) 50%, rgb(100, 0, 100) 100%);
+    }
+
+    .kaydet {
+      background: url(./images/word.png) no-repeat;
+      /* background: linear-gradient(to right, rgb(88, 216, 184) 0%, rgb(150, 0, 150) 50%, rgb(100, 0, 100) 100%); */
+    }
+
+    .bastanBasla {
+      background: url(./images/repeat.png) no-repeat;
+      /* background: linear-gradient(to right, rgb(180, 0, 180) 0%, rgb(150, 0, 150) 50%, rgb(100, 0, 100) 100%); */
+    }
+
+    .zoomIn {
+      background: url(./images/zoom-in.png) no-repeat;
+      /* background: linear-gradient(to right, rgb(0, 180, 180) 0%, rgb(0, 150, 150) 50%, rgb(0, 100, 100) 100%); */
+    }
+
+    .zoomOut {
+      background: url(./images/zoom-out.png) no-repeat;
+      /* background: linear-gradient(to right, rgb(180, 180, 0) 0%, rgb(150, 150, 0) 50%, rgb(100, 100, 0) 100%); */
+    }
+
+    .btnHecele {
+      background: linear-gradient(to right, rgb(253, 194, 85) 0%, rgb(150, 150, 0) 50%, rgb(100, 100, 0) 100%);
+    }
+
+    body {
+      padding: 0;
+      margin: 0;
+      background: #fff;
+    }
+
+    #editor-container {
+      height: 300px;
+    }
+
+    .p {
+      font-size: 12px
+    }
+
+    .div {
+      font-size: 20px
+    }
+
+    .pre {
+      font-size: 16px
+    }
+
+    .container {
+      font-family: arial;
+      font-size: 24px;
+      margin: 25px;
+      width: 350px;
+      height: 200px;
+      outline: dashed 1px black;
+      /* Setup */
+      position: relative;
+    }
+
+    .child {
+      width: 50px;
+      height: 50px;
+      background-color: red;
+      /* Center vertically and horizontally */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -25px 0 0 -25px;
+      /* Apply negative top and left margins to truly center the element */
+    }
+
+    .relative {
+      padding: 10px;
+      position: relative;
+      background-color: #fff;
+      margin: 10px;
+    }
+
+    .navitem {
+      display: inline-block;
+      width: 55px;
+      height: 40px;
+      text-align: center;
+      border: gray;
+      /* background-color: #E8562A; */
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .hece {
+      margin-left: 20px;
+      margin-right: 20px;
+      padding: 10px;
+      border-radius: 10px;
+      height: fit-content;
+
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="center">
+    <div class="wordMain center">
+      <div id="idStoryContainer" class=" center">
+        <div>
+          <textarea id="id_storycontent" class="storyContent" name="editor1"></textarea>
+        </div>
+        <div>
+          <div>
+
+          </div>
+        </div>
+      </div>
+      <div><br></div>
+      <div class="wordMain center">
+        <div id="id_wordContent" class="wordContent centerText">
+          Word
+        </div>
+        <div>
+          <span id="currentSentenceIndex">0</span>
+          <span> / </span>
+          <span id="totalSentenceCount">0</span>
+        </div>
+
+        <div class="relative">
+
+          <div id="btnSave" class="kDHpBI navitem" title="KAYDET">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2344/2344147.png"
+              class="btnIcon"></img>
+          </div>
+          <div id="btnShowHide" class="kDHpBI navitem" title="HİKAYE">
+            <img src="https://cdn-icons-png.flaticon.com/512/708/708922.png" class="btnIcon"></img>
+          </div>
+          <div id="btnPrev" class="kDHpBI navitem" title="ONCEKI>">
+            <img src="https://cdn-icons-png.flaticon.com/512/32/32766.png" class="btnIcon"></img>
+          </div>
+          <div id="btnNext" class="kDHpBI navitem" title="SONRAKİ">
+            <img src="https://cdn-icons-png.flaticon.com/512/2026/2026650.png" class="btnIcon"></img>
+          </div>
+          <div id="btnHecele" class="kDHpBI navitem" title="KELİME">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1375/1375584.png"
+              class="btnIcon"></img>
+          </div>
+          <div id="btnSpot" class="kDHpBI navitem" title="SPOT">
+            <img src="https://cdn-icons-png.flaticon.com/512/708/708742.png" class="btnIcon"></img>
+          </div>
+          <div id="btnIncrease" class="kDHpBI navitem" title="ZOOM IN">
+            <!-- <img src="./images/zoom-in.png" class="btnIcon"></img> -->
+            <img src="https://cdn-icons-png.flaticon.com/512/67/67761.png" class="btnIcon"></img>
+          </div>
+          <div id="btnDecrease" class="kDHpBI navitem" title="ZOOM OUT">
+            <img src="https://cdn-icons-png.flaticon.com/512/67/67790.png" class="btnIcon"></img>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+
+      var fontSize = 96;
+      var mode = "KELİME";
+      var spotMode = false;
+      var wordList = [];
+      var storyContent;
+      var currentIndex = -1;
+      var sentenceIndex = 0;
+      var spotIndexes = [];
+      var storySentences = [];
+      var wordList = [];
+      //var heceList=[];
+      var sesliList = ["a", "e", "ı", "i", "o", "u", "ü", "ö", "A", "E", "I", "İ", "O", "U", "Ü", "Ö"];
+      var colorList = ["F7431D", "E17C11", "BBA204", "4BCD04", "04CCBB", "0494CC", "0452CC", "4804CC", "8C04C6", "BB04C6", "C60465", "C60419"];
+
+      function hecele(word, heceList = []) {
+        //word = word.toLocaleLowerCase(tr-TR);
+        //word = word.toLowerCase();
+        newWord = "";
+
+        //sozcukte hic sesli harf yoksa ya da sozcukte hicbir sey yoksa son olusturulan heceye ekle ve islemi durdur
+        if (!isContainVowel(word)) {
+          if (heceList[-1] != undefined)
+            heceList[-1] += word;
+          return;
+        }
+
+        //en sagdaki sesli harfi bul
+        lastVowelIndex = getLastVowelLetter(word)
+
+
+        //en sagdaki sesli harfin solundaki harf sesli ise o zaman bu en sagdaki sesliden heceyi ayir
+        if (lastVowelIndex == 0 || sesliList.includes(word[lastVowelIndex - 1])) {
+          hece = word.slice(lastVowelIndex)
+          newWord = word.slice(0, lastVowelIndex);
+        }
+        else {//en sagdaki seslinin solundaki harf sessiz ise o zaman heceyi bu sessizden ayir
+          hece = word.slice(lastVowelIndex - 1)
+          newWord = word.slice(0, lastVowelIndex - 1);
+        }
+        heceList.unshift(hece);
+
+
+        // olusan heceyi attiktan sonra kalan kelimeyle basa don
+        return hecele(newWord, heceList);
+      }
+
+      function getLastVowelLetter(word) {
+        for (var i = word.length - 1; i >= 0; i--) {
+          if (sesliList.includes(word[i]))
+            return i;
+        }
+        return null;
+      }
+
+      function isContainVowel(word) {
+        for (var i = 0; i < word.split('').length; i++) {
+          if (sesliList.includes(word[i]))
+            return true;
+        }
+      }
+
+      $(document).ready(function () {
+        //CKEDITOR.replace( 'editor1' );
+        showHide();
+        var fontSize = parseInt($("#id_wordContent").css("font-size"));
+      });
+
+      function clearText(text) {
+        return text.replaceAll(",", " ").replaceAll("\n", " ").replaceAll("\r", "").replaceAll(/  +/g, " ").trim();
+      }
+
+      function splitMulti(str, tokens) {
+        var tempChar = tokens[0]; // We can use the first token as a temporary join character
+        for (var i = 1; i < tokens.length; i++) {
+          str = str.split(tokens[i]).join(tempChar);
+        }
+        str = str.split(tempChar);
+        return str;
+      }
+
+      function savecontent() {
+
+        $(document).ready(function () {
+          var content = document.getElementById('id_storycontent').value.slice();
+
+          //var content = $("#id_storycontent").value;
+          content = clearText(content);
+          storySentences = content.split('.');
+          totalSentenceCount.innerHTML = storySentences.length;
+
+          storySentences = storySentences.filter(function (element) {
+            return element !== undefined;
+          });
+
+        });
+      }
+
+      String.prototype.turkishToUpper = function () {
+        var string = this;
+        var letters = { "i": "İ", "ş": "Ş", "ğ": "Ğ", "ü": "Ü", "ö": "Ö", "ç": "Ç", "ı": "I" };
+        string = string.replace(/(([iışğüçö]))/g, function (letter) { return letters[letter]; })
+        return string.toUpperCase();
+      }
+
+      function camelize(str) {
+        return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+          return index === 0 ? word.toLocaleUpperCase('tr-TR') : word.toLocaleLowerCase('tr-TR');
+          //return index === 0 ? word.turkishToUpper() : word.toLowerCase()();
+        }).replace(/\s+/g, '');
+      }
+
+      function showHide() {
+        $(document).ready(function () {
+          var storyContent = document.getElementById("id_storycontent");
+          var storyContainer = document.getElementById("idStoryContainer");
+          var btnSave = document.getElementById("btnSave");
+          var btnDecrease = document.getElementById("btnDecrease");
+          var btnIncrease = document.getElementById("btnIncrease");
+          var btnNext = document.getElementById("btnNext");
+          var wordContent = document.getElementById("id_wordContent");
+          if (storyContent.style.display === "none") {
+            wordContent.style.display = "none";
+            storyContent.style.display = "block";
+            storyContainer.style.display = "block";
+            btnSave.style.display = "inline-block"
+            btnDecrease.style.display = "none";
+            btnIncrease.style.display = "none";
+            btnNext.style.display = "none";
+            btnPrev.style.display = "none";
+            btnHecele.style.display = "none";
+            btnSpot.style.display = "none";
+            btnShowHide.title = "HIKAYE";
+            btnShowHide.children[0].src = "https://cdn-icons-png.flaticon.com/512/182/182321.png";
+
+          } else {
+            wordContent.style.display = "flex";
+            storyContent.style.display = "none";
+            storyContainer.style.display = "none";
+            btnSave.style.display = "none";
+            btnDecrease.style.display = "inline-block";
+            btnIncrease.style.display = "inline-block";
+            btnNext.style.display = "inline-block";
+            btnPrev.style.display = "inline-block";
+            btnHecele.style.display = "inline-block";
+            btnSpot.style.display = "inline-block";
+            btnShowHide.title = "KELIME";
+            btnShowHide.children[0].src = "https://cdn-icons-png.flaticon.com/512/708/708922.png";
+          }
+        });
+      }
+
+      function displayWord() {
+        currentSentenceIndex.innerHTML = sentenceIndex;
+        var word = wordList[currentIndex];
+        word = camelize(word);
+        if (mode == "HECELE") {
+          word = getHeceList(word);
+        }
+
+        var wordContent = document.getElementById('id_wordContent');
+        wordContent.innerHTML = word;
+      }
+
+      function nextword() {
+        var sentence = storySentences[sentenceIndex];
+        wordList = sentence.split(' ');
+        wordList = wordList.filter(function (element) {
+          return element !== undefined && element.length > 0;
+        });
+        if (currentIndex < wordList.length - 1) {
+          currentIndex++;
+        }
+        else {
+          if (sentenceIndex < storySentences.length)
+            sentenceIndex++;
+          currentIndex = 0;
+          var sentence = storySentences[sentenceIndex];
+          wordList = sentence.split(' ');
+          wordList = wordList.filter(function (element) {
+            return element !== undefined && element.length > 0;
+          });
+        }
+        displayWord();
+      }
+
+      function prevword() {
+        var sentence = storySentences[sentenceIndex];
+        wordList = sentence.split(' ');
+        wordList = wordList.filter(function (element) {
+          return element !== undefined && element.length > 0;
+        });
+        if (currentIndex > 0) {
+          currentIndex--;
+        }
+        else {
+          if (sentenceIndex > 0)
+            sentenceIndex--;
+          currentIndex = 0;
+        }
+        displayWord();
+      }
+
+
+      function spotModeHece() {
+        var word = wordList[currentIndex];
+        if (word.length < 6) return;
+        var childrens = document.querySelectorAll('#id_wordContent>span');
+
+        if (spotIndexes.length < childrens.length) {
+          spotIndexes.push(spotIndexes.length);
+          spotIndexes = spotIndexes.filter(function (item, pos, self) {
+            return self.indexOf(item) == pos;
+          });
+        }
+        else {
+          spotIndexes = [];
+          spotMode = false;
+          return false;
+        }
+        childrens.forEach((item, index) => {
+          var visibility = spotIndexes.includes(index) ? 'visible' : 'hidden';
+          document.querySelectorAll('#id_wordContent>span')[index].style['visibility'] = visibility;
+        });
+        return true;
+      };
+
+      $(function () {
+        $("#btnSpot").click(function () {
+          spotMode = !spotMode;
+          var btnSpot = document.getElementById("btnSpot");
+          if (spotMode)
+            btnSpot.children[0].src = "https://cdn-icons-png.flaticon.com/512/708/708884.png";
+          else
+            btnSpot.children[0].src = "https://cdn-icons-png.flaticon.com/512/708/708742.png";
+
+          if (spotMode) {
+            var res = spotModeHece()
+            if (!res) {
+              displayWord();
+            }
+          }
+          else
+            displayWord();
+          sleep(50);
+        });
+      });
+
+      $(function () {
+        $("#btnNext").click(function () {
+          if (spotMode) {
+            var res = spotModeHece()
+            if (!res) {
+              nextword();
+            }
+          }
+          else
+            nextword();
+          sleep(50);
+        });
+      });
+
+      $("#btnPrev").dblclick(function () {
+        currentIndex = 0;
+        displayWord();
+        sleep(50);
+      });
+
+      $(function () {
+        $("#btnPrev").click(function () {
+          if (spotMode) {
+            spotIndexes.length -= 2;
+            res = spotModeHece();
+            if (!res) {
+              nextword();
+            }
+          }
+          else
+            prevword();
+
+          sleep(50);
+        });
+      });
+
+      $(function () {
+        $("#btnShowHide").click(function () {
+          showHide();
+          sleep(50);
+        });
+      });
+
+      $(function () {
+        $("#btnSave").click(function () {
+          savecontent();
+          sleep(50);
+        });
+      });
+
+      $(function () {
+        $("#btnIncrease").click(function () {
+          zoomIn();
+        });
+      });
+
+      $(function () {
+        $("#btnDecrease").click(function () {
+          zoomOut();
+        });
+      });
+
+      function getHeceList(word) {
+
+        var heceList = [];
+
+        if (word.length < 6)
+          heceList.unshift(word);
+        else
+          hecele(word, heceList);
+        heceList = heceList.filter(function (element) {
+          return element !== undefined;
+        });
+
+
+        heceList.forEach(function (item, index) {
+          //var hece = item.toLocaleUpperCase('tr-TR');
+          //var hece = item.toUpperCase('tr-TR');
+          var hece = item;
+          var randomColor = colorList[Math.floor(Math.random() * colorList.length)];
+          hece = `<span class = "hece" style="color:#${randomColor}; border: #${randomColor} solid 1px;">${hece}</span>`
+          heceList[index] = hece;
+        });
+
+        var heceContent = heceList.join("");
+        return heceContent
+      }
+
+      $(function () {
+
+        $("#btnHecele").click(function () {
+          mode = this.title;
+
+          if (mode == "HECELE") {
+            this.children[0].src = "https://cdn-icons-png.flaticon.com/512/1375/1375584.png";
+            this.title = "KELİME"
+            mode = "KELİME";
+          }
+          else {
+            this.children[0].src = "https://cdn-icons-png.flaticon.com/512/3749/3749948.png";
+            this.title = "HECELE";
+            mode = "HECELE";
+          }
+          displayWord();
+          sleep(50);
+        });
+      });
+
+      function zoomIn() {
+        fontSize = fontSize + 5;
+        size = fontSize + "px";
+        $("#id_wordContent").css({
+          'font-size': size
+        });
+      }
+
+      function zoomOut() {
+        fontSize = fontSize - 5;
+        size = fontSize + "px";
+        $("#id_wordContent").css({
+          'font-size': size
+        });
+      }
+    </script>
+</body>
+
+</html>
